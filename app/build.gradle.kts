@@ -1,3 +1,6 @@
+import org.gradle.internal.impldep.org.jsoup.nodes.Entities
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -10,7 +13,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.shoplisters"
+        applicationId = "com.karkak.shoplisters"
         minSdk = 28
         targetSdk = 36
         versionCode = 1
@@ -49,6 +52,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
+
 
     //firebase
     implementation(platform("com.google.firebase:firebase-bom:34.0.0"))

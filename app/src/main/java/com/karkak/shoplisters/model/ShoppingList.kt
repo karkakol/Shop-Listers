@@ -1,17 +1,18 @@
 package com.karkak.shoplisters.model
 
+import com.google.firebase.firestore.DocumentId
 import java.util.Date
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 data class ShoppingList(
-    val id: String,
-    val creationDate: Date,
-    val name: String,
-    val creator: String,
-    val complete: Boolean,
-    val items: List<ShoppingItem>,
-    val completionDate: Date?,
+    @DocumentId val id: String = "",
+    val creationDate: Date? = null,
+    val name: String = "",
+    val creator: String= "",
+    val complete: Boolean = false,
+    val items: List<ShoppingItem> = emptyList(),
+    val completionDate: Date? = null,
 ) {
     companion object {
         private fun mock(
@@ -24,7 +25,7 @@ data class ShoppingList(
             completionDate: Date? = if (complete) Date(System.currentTimeMillis() - TimeUnit.HOURS.toMillis((1..5).random().toLong())) else null
         ): ShoppingList {
             return ShoppingList(
-                id = id,
+                id = "",
                 creationDate = creationDate,
                 name = name,
                 creator = creator,

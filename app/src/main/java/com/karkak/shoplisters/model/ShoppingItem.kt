@@ -3,10 +3,10 @@ package com.karkak.shoplisters.model
 import java.util.UUID
 
 data class ShoppingItem(
-    val id: String,
-    val name: String,
-    val quantity: Int,
-    val complete: Boolean
+    val id: String = "", // Assuming items also have IDs, adjust as needed
+    val name: String = "",
+    val quantity: Int = 0,
+    val complete: Boolean = false
 ) {
     companion object {
         private fun mock(

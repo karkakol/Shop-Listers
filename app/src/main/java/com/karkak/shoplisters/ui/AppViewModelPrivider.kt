@@ -10,11 +10,10 @@ import com.karkak.shoplisters.ui.screens.shopping_lists.ShoppingListsViewModel
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
-            ShoppingListsViewModel()
+            ShoppingListsViewModel(shopListersApplication().container.shoppingListsRepository)
         }
-
     }
 }
 
-fun CreationExtras.inventoryApplication(): ShopListersApplication =
+fun CreationExtras.shopListersApplication(): ShopListersApplication =
     (this[AndroidViewModelFactory.APPLICATION_KEY] as ShopListersApplication)

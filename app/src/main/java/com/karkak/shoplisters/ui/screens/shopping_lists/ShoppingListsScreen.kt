@@ -28,33 +28,35 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.karkak.shoplisters.R
 import com.karkak.shoplisters.model.ShoppingList
+import com.karkak.shoplisters.ui.AppViewModelProvider
 import com.karkak.shoplisters.ui.common.CommonTopAppBar
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShoppingListsScreen(modifier: Modifier = Modifier) {
+fun ShoppingListsScreen(
+    modifier: Modifier = Modifier,
+    viewModel: ShoppingListsViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val state = ShoppingListsScreenState()
-    Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            CommonTopAppBar(title = "Your shopping lists", scrollBehavior = scrollBehavior)
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { },
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(dimensionResource(R.dimen.padding_large)),
+    val state = viewModel.uiState
+    Scaffold(modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = {
+        CommonTopAppBar(title = "Your shopping lists", scrollBehavior = scrollBehavior)
+    }, floatingActionButton = {
+        FloatingActionButton(
+            onClick = { },
+            shape = MaterialTheme.shapes.medium,
+            modifier = Modifier.padding(dimensionResource(R.dimen.padding_large)),
 
-                ) {
-                Icon(
-                    imageVector = Icons.Filled.AddShoppingCart,
-                    contentDescription = "Create shopping list"
-                )
-            }
+            ) {
+            Icon(
+                imageVector = Icons.Filled.AddShoppingCart,
+                contentDescription = "Create shopping list"
+            )
         }
-    ) { innerPadding ->
+    }) { innerPadding ->
         ShoppingListsContent(state.lists, Modifier.padding(innerPadding))
     }
 }
@@ -65,14 +67,12 @@ fun ShoppingListsContent(shoppingLists: List<ShoppingList>, modifier: Modifier =
     LazyColumn(modifier.fillMaxWidth()) {
         items(items = shoppingLists, key = { it.id }) { shoppingList ->
             ShoppingListsListTile(
-                shoppingList,
-                Modifier.padding(dimensionResource(R.dimen.padding_small))
+                shoppingList, Modifier.padding(dimensionResource(R.dimen.padding_small))
             )
         }
         items(items = shoppingLists, key = { it.id + it.id }) { shoppingList ->
             ShoppingListsListTile(
-                shoppingList,
-                Modifier.padding(dimensionResource(R.dimen.padding_small))
+                shoppingList, Modifier.padding(dimensionResource(R.dimen.padding_small))
             )
         }
     }
@@ -128,7 +128,3 @@ fun ShoppingListsContentPreview() {
 fun ShoppingListsListTilePreview() {
     ShoppingListsListTile(ShoppingList.MOCKS.first())
 }
-
-data class ShoppingListsScreenState(
-    val lists: List<ShoppingList> = ShoppingList.MOCKS
-)

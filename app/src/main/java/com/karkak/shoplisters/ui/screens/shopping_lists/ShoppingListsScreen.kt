@@ -38,6 +38,7 @@ import com.karkak.shoplisters.ui.common.CommonTopAppBar
 @Composable
 fun ShoppingListsScreen(
     modifier: Modifier = Modifier,
+    navigateToShoppingList: () -> Unit = {},
     viewModel: ShoppingListsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -46,7 +47,7 @@ fun ShoppingListsScreen(
         CommonTopAppBar(title = "Your shopping lists", scrollBehavior = scrollBehavior)
     }, floatingActionButton = {
         FloatingActionButton(
-            onClick = viewModel::onCreateListButtonTapped,
+            onClick = navigateToShoppingList,
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier.padding(dimensionResource(R.dimen.padding_large)),
 
